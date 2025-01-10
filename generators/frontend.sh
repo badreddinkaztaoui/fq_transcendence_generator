@@ -2,23 +2,20 @@
 
 generate_frontend()
 {
-    echo -e "\n${BLUE}Checking prerequisites...${NC}"
-
     if ! command -v git &> /dev/null; then
-        echo -e "\n${RED}Git is not installed. Please install git first.${NC}"
+        echo -e "${RED}❌ Error: Git is not installed${NC}"
+        echo -e "${YELLOW}ℹ️  Please install git before proceeding${NC}"
         return 1
     fi
 
-    echo -e "\n${BLUE}Cloning repository from $FRONTEND_REPO${NC}"
-
-    if git clone "$FRONTEND_SETUP" "$FRONTEND_DIR"; then
-        echo -e "\n${GREEN}Repository cloned successfully to $PROJECT_ROOT/$FRONTEND_DIR${NC}"
+    echo -e "${YELLOW}📥 Cloning frontend template...${NC}"
+    
+    if git clone "$FRONTEND_SETUP" "$FRONTEND_DIR"; then     
+        echo -e "${YELLOW}🧹 Cleaning up git repository...${NC}"
+        rm -rf $FRONTEND_DIR/.git
     else
-        echo -e "\n${RED}Failed to clone repository${NC}"
+        echo -e "${RED}❌ Failed to clone frontend template${NC}"
+        echo -e "${YELLOW}ℹ️  Please check your internet connection and repository URL${NC}"
         return 1
     fi
-
-    rm -rf $FRONTEND_DIR/.git
-
-    echo -e "\n${GREEN}Frontend Created Successfuly.${NC}"
 }
